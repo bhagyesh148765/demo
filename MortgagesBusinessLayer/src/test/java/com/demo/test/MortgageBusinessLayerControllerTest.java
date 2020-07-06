@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,10 +33,11 @@ import com.mortgage.businesslayer.demo.controller.MortgageBusinessLayerControlle
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.MortgageService;
 import com.mortgage.businesslayer.demo.soapservice.soapclient.MortgageSoapServiceClient;
 import com.mortgage.businesslayer.demo.validator.version.VersionValidator;
-
+@WebAppConfiguration
 public class MortgageBusinessLayerControllerTest extends CustomTest {
 
 	MortgageSoapServiceClient soapServiceClient;
@@ -138,7 +140,8 @@ public class MortgageBusinessLayerControllerTest extends CustomTest {
 	 * 
 	 * LocalValidatorFactoryBean validator;
 	 * 
-	 * @Test public void createMortgageTest() throws Exception {
+	 * @Test(expected = MortgageBusinessException.class) public void
+	 * createMortgageTest() throws Exception {
 	 * 
 	 * SpringConstraintValidatorFactory springConstraintValidatorFactory = new
 	 * SpringConstraintValidatorFactory(
@@ -146,9 +149,8 @@ public class MortgageBusinessLayerControllerTest extends CustomTest {
 	 * LocalValidatorFactoryBean();
 	 * validator.setConstraintValidatorFactory(springConstraintValidatorFactory);
 	 * validator.setApplicationContext(webApplicationContext);
-	 * validator.afterPropertiesSet();
-	 * 
-	 * context = Mockito.mock(ConstraintValidatorContext.class); builder =
+	 * validator.afterPropertiesSet(); context =
+	 * Mockito.mock(ConstraintValidatorContext.class); builder =
 	 * Mockito.mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
 	 * Mockito.when(context.buildConstraintViolationWithTemplate(Mockito.anyString()
 	 * )).thenReturn(builder);
@@ -170,4 +172,5 @@ public class MortgageBusinessLayerControllerTest extends CustomTest {
 	 * System.out.println(content); assertEquals(content,
 	 * "Mortgage creation is Successfull"); }
 	 */
+
 }

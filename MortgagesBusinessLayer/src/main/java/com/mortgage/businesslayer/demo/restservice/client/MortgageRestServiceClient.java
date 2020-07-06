@@ -4,42 +4,67 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesBkndRestResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 
 @Component
 public class MortgageRestServiceClient {
 
+	private static final Logger log = LoggerFactory.getLogger(MortgageRestServiceClient.class);
+
 	@Autowired
 	RestTemplate restTemplate;
 
-	public Integer getmaxVersionByMorgageIDRestCall(final String mortgageID) {
-
-		final String uri = "https://localhost:8080/MortgageDataLayer/Mortgages/getMaxVersion?mortgageID=" + mortgageID;
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		ResponseEntity<GetMaxVersionByMortgageIDResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.GET,
-				entity, GetMaxVersionByMortgageIDResponse.class);
-		System.out.println("responseEntity " + responseEntity);
-		GetMaxVersionByMortgageIDResponse maxVersionDataLayerReponseDto = responseEntity.getBody();
-		System.out.println("maxVersion" + maxVersionDataLayerReponseDto.getMaxVersion());
-		return maxVersionDataLayerReponseDto.getMaxVersion();
-
+	/**
+	 * Rest client call to fetch max version number
+	 * 
+	 * @param mortgageID
+	 * @return
+	 * @throws MortgageBusinessException
+	 */
+	public Integer getmaxVersionByMorgageIDRestCall(final String mortgageID) throws MortgageBusinessException {
+		try {
+			log.info("entering into getmaxVersionByMorgageIDRestCall method ");
+			final String uri = "https://localhost:8080/MortgageDataLayer/Mortgages/getMaxVersion?mortgageID="
+					+ mortgageID;
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+			ResponseEntity<GetMaxVersionByMortgageIDResponse> responseEntity = restTemplate.exchange(uri,
+					HttpMethod.GET, entity, GetMaxVersionByMortgageIDResponse.class);
+			GetMaxVersionByMortgageIDResponse maxVersionDataLayerReponseDto = responseEntity.getBody();
+			log.info("exiting from getmaxVersionByMorgageIDRestCall method ");
+			return maxVersionDataLayerReponseDto.getMaxVersion();
+		} catch (Exception e) {
+			log.error("error occured during backend communication" + e.getMessage() + e.getCause());
+			throw new MortgageBusinessException("Communication Error", e, HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
-	public GetAllMortgagesBkndRestResponse getAllMortgagesRestCall(final String sortOrder) {
+	/**
+	 * Rest cleint call to get all mortgsges details
+	 * 
+	 * @param sortOrder
+	 * @return
+	 * @throws MortgageBusinessException
+	 */
+	public GetAllMortgagesBkndRestResponse getAllMortgagesRestCall(final String sortOrder)
+			throws MortgageBusinessException {
+		log.info("entering into getAllMortgagesRestCall method ");
 		try {
 			final String uri = "https://localhost:8080/MortgageDataLayer/Mortgages?orderBy=" + sortOrder;
 			Map<String, String> params = new HashMap<String, String>();
@@ -50,20 +75,13 @@ public class MortgageRestServiceClient {
 			ResponseEntity<GetAllMortgagesBkndRestResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.GET,
 					entity, GetAllMortgagesBkndRestResponse.class);
 			GetAllMortgagesBkndRestResponse mortgageResponseDto = responseEntity.getBody();
+			log.info("exiting from getmaxVersionByMorgageIDRestCall method ");
 			return mortgageResponseDto;
-		} catch (HttpStatusCodeException e) {
-			System.out.println("issue with backend ");
-			e.printStackTrace();
 		} catch (Exception e) {
-			System.out.println("issue with backend ");
-			e.printStackTrace();
-			
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			
+			log.error("error occured during backend communication in getAllMortgagesRestCall method" + e.getMessage()
+					+ e.getCause());
+			throw new MortgageBusinessException("Communication Error", e, HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		
-		return null;
 	}
 
 	/**
@@ -71,14 +89,21 @@ public class MortgageRestServiceClient {
 	 * 
 	 * @param reqEntity
 	 * @return String status of operation
+	 * @throws MortgageBusinessException
 	 */
-	public String createMortgageRestCall(final MortgageDto reqEntity) {
-		final String posturi = "https://localhost:8080/MortgageDataLayer/Mortgages/createMortgage";
-		HttpHeaders headers = new HttpHeaders();
-		HttpEntity<?> request = new HttpEntity<>(reqEntity, headers);
-		ResponseEntity<String> status = restTemplate.postForEntity(posturi, request, String.class);
-		System.out.println("responseEntityPost " + status.getBody());
-		return status.getBody();
+	public String createMortgageRestCall(final MortgageDto reqEntity) throws MortgageBusinessException {
+		try {
+			final String posturi = "https://localhost:8080/MortgageDataLayer/Mortgages/createMortgage";
+			HttpHeaders headers = new HttpHeaders();
+			HttpEntity<?> request = new HttpEntity<>(reqEntity, headers);
+			ResponseEntity<String> status = restTemplate.postForEntity(posturi, request, String.class);
+			System.out.println("responseEntityPost " + status.getBody());
+			return status.getBody();
+		} catch (Exception e) {
+			log.error("error occured during backend communication in createMortgageRestCall method" + e.getMessage()
+					+ e.getCause());
+			throw new MortgageBusinessException("Communication Error", e, HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 
 }

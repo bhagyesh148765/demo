@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.MortgageService;
 import com.mortgage.businesslayer.demo.service.ProtocallDelegator;
 
@@ -31,8 +32,9 @@ public class MortgageServiceIMPL implements MortgageService {
 	 * 
 	 * @param sortOrder
 	 * @return
+	 * @throws MortgageBusinessException 
 	 */
-	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) {
+	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) throws MortgageBusinessException {
 		return protocallDelegator.getAllMortgages(sortOrder);
 	}
 
@@ -40,13 +42,14 @@ public class MortgageServiceIMPL implements MortgageService {
 	 * 
 	 * @param reqEntity
 	 * @return
+	 * @throws MortgageBusinessException 
 	 * @throws RecordNotFoundException
 	 */
-	public String createMortgage(MortgageDto reqEntity) {
+	public String createMortgage(MortgageDto reqEntity) throws MortgageBusinessException {
 		return protocallDelegator.createMorgage(reqEntity);
 	}
 
-	public Integer getMaxVersion(String mortgageID) {
+	public Integer getMaxVersion(String mortgageID) throws MortgageBusinessException {
 		return protocallDelegator.getMaxVersionByMortgageID(mortgageID);
 	}
 	

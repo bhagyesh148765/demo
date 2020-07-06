@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.MortgageService;
 
 @RestController
@@ -29,9 +30,10 @@ public class MortgageBusinessLayerController {
 	 * 
 	 * @param orderBy
 	 * @return GetAllMortgagesResponseDto List of mortgages
+	 * @throws MortgageBusinessException 
 	 */
 	@GetMapping
-	public ResponseEntity<GetAllMortgagesConsumerResponse> getAllMortgages(@RequestParam("orderBy") String orderBy) {
+	public ResponseEntity<GetAllMortgagesConsumerResponse> getAllMortgages(@RequestParam("orderBy") String orderBy) throws MortgageBusinessException {
 		GetAllMortgagesConsumerResponse mortgageResponseDto = service.getAllMortgages(orderBy);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Access-Control-Allow-Origin", "*");
@@ -44,9 +46,10 @@ public class MortgageBusinessLayerController {
 	 * 
 	 * @param mortgageDto
 	 * @return
+	 * @throws MortgageBusinessException 
 	 */
 	@PostMapping("createMortgage")
-	public ResponseEntity<String> createMortgage(@Valid @RequestBody MortgageDto mortgageDto) {
+	public ResponseEntity<String> createMortgage(@Valid @RequestBody MortgageDto mortgageDto) throws MortgageBusinessException {
 
 		String status = service.createMortgage(mortgageDto);
 		HttpHeaders httpHeaders = new HttpHeaders();

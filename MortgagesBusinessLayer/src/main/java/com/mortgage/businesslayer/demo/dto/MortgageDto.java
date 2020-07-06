@@ -24,9 +24,7 @@ public class MortgageDto {
 	@ValidateOfferDate
 	private Date offerDateReq;
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date createdDateReq;
 
-	private String isOfferExpired;
 
 	/**
 	 * @return the mortgageIDReq
@@ -102,40 +100,6 @@ public class MortgageDto {
 		this.offerDateReq = offerDateReq;
 	}
 
-	/**
-	 * @return the createdDateReq
-	 */
-	public Date getCreatedDateReq() {
-		return createdDateReq;
-	}
-
-	/**
-	 * @param createdDateReq the createdDateReq to set
-	 */
-	public void setCreatedDateReq(Date createdDateReq) {
-		this.createdDateReq = createdDateReq;
-	}
-
-	/**
-	 * @return the isOfferExpired
-	 */
-	public String getIsOfferExpired() {
-		return isOfferExpired;
-	}
-
-	/**
-	 * @param isOfferExpired the isOfferExpired to set
-	 */
-	public void setIsOfferExpired(String isOfferExpired) {
-		this.isOfferExpired = isOfferExpired;
-	}
-
-	@Override
-	public String toString() {
-		return "MortgageDto [mortgageIDReq=" + mortgageIDReq + ", versionReq=" + versionReq + ", offerIDReq="
-				+ offerIDReq + ", productIDReq=" + productIDReq + ", offerDateReq=" + offerDateReq + ", createdDateReq="
-				+ createdDateReq + ", isOfferExpired=" + isOfferExpired + "]";
-	}
 
 	/**
 	 * 

@@ -21,5 +21,12 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 		ErrorDetails errorDetails = new ErrorDetails(new Date(), message, "InvalidInputRequest");
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
+	
+	public ResponseEntity<Object> handleMortgageBusinessException(MortgageBusinessException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), "eror");
+		return new ResponseEntity<>(errorDetails, ex.getStatus());
+	}
+
 
 }

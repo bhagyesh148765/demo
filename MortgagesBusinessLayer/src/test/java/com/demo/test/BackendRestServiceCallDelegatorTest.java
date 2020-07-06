@@ -24,6 +24,7 @@ import com.mortgage.businesslayer.demo.dto.GetAllMortgagesBkndRestResponse;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.restservice.client.MortgageRestServiceClient;
 import com.mortgage.businesslayer.demo.restservice.handler.BackendRestServiceCallDelegator;
 
@@ -36,7 +37,7 @@ public class BackendRestServiceCallDelegatorTest extends CustomTest {
 	private MortgageRestServiceClient restServiceClient;
 
 	@Test
-	public void getAllMortgagesTest() throws ParseException {
+	public void getAllMortgagesTest() throws ParseException, MortgageBusinessException {
 
 		final GetAllMortgagesBkndRestResponse getMortgagesResponse = new GetAllMortgagesBkndRestResponse();
 		final Mortgages respnseDTO = new Mortgages();
@@ -65,6 +66,28 @@ public class BackendRestServiceCallDelegatorTest extends CustomTest {
 		assertEquals(sdf.format(mortgageDtoResponse.getOfferDateReq()), "14/03/2021");
 	}
 
+	@Test(expected = MortgageBusinessException.class)
+	public void getAllMortgagesExceptopnTest() throws ParseException, MortgageBusinessException {
+
+		final GetAllMortgagesBkndRestResponse getMortgagesResponse = new GetAllMortgagesBkndRestResponse();
+		final Mortgages respnseDTO = new Mortgages();
+		respnseDTO.setMortgageIDReq("M1");
+		respnseDTO.setProductIDReq("B1");
+		respnseDTO.setVersionReq(5);
+		respnseDTO.setOfferIDReq("OF-6");
+		respnseDTO.setCreatedDateReq(Date_FORMAT.parse("14/03/2021"));
+		respnseDTO.setOfferDateReq(Date_FORMAT.parse("14/03/2021"));
+		respnseDTO.setIsOfferExpired("Y");
+		final List<Mortgages> mortgageDtoList = new ArrayList<Mortgages>();
+		mortgageDtoList.add(respnseDTO);
+		getMortgagesResponse.setMortgages(mortgageDtoList);
+		Mockito.doThrow(new MortgageBusinessException("backend communication")).when(restServiceClient)
+				.getAllMortgagesRestCall(any(String.class));
+		GetAllMortgagesConsumerResponse getAllMortgagesResponseDto = backendRestServiceCallDelegator
+				.getAllMortgages("createdDate");
+		assertNotNull(getAllMortgagesResponseDto);
+	}
+
 	public XMLGregorianCalendar getXMLGregorianCalendarByDate(final Date date) {
 		try {
 			GregorianCalendar gc = new GregorianCalendar();
@@ -77,15 +100,25 @@ public class BackendRestServiceCallDelegatorTest extends CustomTest {
 	}
 
 	@Test
-	public void getMaxVersionByMortgageIDTest() throws ParseException {
+	public void getMaxVersionByMortgageIDTest() throws ParseException, MortgageBusinessException {
 		Mockito.when(restServiceClient.getmaxVersionByMorgageIDRestCall(any(String.class))).thenReturn(5);
 		Integer max = backendRestServiceCallDelegator.getMaxVersionByMortgageID("M1");
 		assertNotNull(max);
 		assertEquals(max, new Integer(5));
 	}
 
+	@Test(expected = MortgageBusinessException.class)
+	public void getMaxVersionByMortgageIDExceptopnTest() throws ParseException, MortgageBusinessException {
+
+		Mockito.doThrow(new MortgageBusinessException("backend communication")).when(restServiceClient)
+				.getmaxVersionByMorgageIDRestCall(any(String.class));
+		Integer max = backendRestServiceCallDelegator.getMaxVersionByMortgageID("M1");
+		assertNotNull(max);
+		assertEquals(max, new Integer(5));
+	}
+
 	@Test
-	public void createMortgagesTest() throws ParseException {
+	public void createMortgagesTest() throws ParseException, MortgageBusinessException {
 		Mockito.when(restServiceClient.createMortgageRestCall(any(MortgageDto.class))).thenReturn("Success");
 		MortgageDto mortgageDto = new MortgageDto();
 		mortgageDto.setMortgageIDReq("M9");
@@ -96,6 +129,22 @@ public class BackendRestServiceCallDelegatorTest extends CustomTest {
 		String status = backendRestServiceCallDelegator.createMorgage(mortgageDto);
 		assertNotNull(status);
 		assertEquals(status, "Success");
+	}
+
+	@Test(expected = MortgageBusinessException.class)
+	public void createMortgagesExceptopnTest() throws ParseException, MortgageBusinessException {
+		Mockito.doThrow(new MortgageBusinessException("backend communication")).when(restServiceClient)
+				.createMortgageRestCall(any(MortgageDto.class));
+		MortgageDto mortgageDto = new MortgageDto();
+		mortgageDto.setMortgageIDReq("M9");
+		mortgageDto.setOfferDateReq(Date_FORMAT.parse("14/03/2021"));
+		mortgageDto.setProductIDReq("B1");
+		mortgageDto.setOfferIDReq("OI-1");
+		mortgageDto.setVersionReq(1);
+		String status = backendRestServiceCallDelegator.createMorgage(mortgageDto);
+		assertNotNull(status);
+		assertEquals(status, "Success");
+
 	}
 
 }

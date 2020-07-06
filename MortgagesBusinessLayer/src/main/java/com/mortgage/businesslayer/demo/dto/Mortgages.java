@@ -115,18 +115,6 @@ public class Mortgages implements Serializable {
 		this.createdDateReq = createdDateReq;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "MortgageDto [mortgageIDReq=" + mortgageIDReq + ", versionReq=" + versionReq + ", offerIDReq="
-				+ offerIDReq + ", productIDReq=" + productIDReq + ", offerDateReq=" + offerDateReq + ", createdDateReq="
-				+ createdDateReq + "]";
-	}
-
 	/**
 	 * @return the isOfferExpired
 	 */

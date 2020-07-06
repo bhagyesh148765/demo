@@ -14,6 +14,7 @@ import com.generated.GetMortgagesRequest;
 import com.generated.GetMortgagesResponse;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.ProtocallDelegator;
 import com.mortgage.businesslayer.demo.soapservice.mapper.MortgageSOAPRequestMapper;
 import com.mortgage.businesslayer.demo.soapservice.mapper.MortgageSOAPResponseMapper;
@@ -31,8 +32,9 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 	/***
 	 * This method is used to get max version for given mortgageID by calling
 	 * backend SOAP service
+	 * @throws MortgageBusinessException 
 	 */
-	public Integer getMaxVersionByMortgageID(final String mortgageID) {
+	public Integer getMaxVersionByMortgageID(final String mortgageID) throws MortgageBusinessException {
 		final GetMaxVersionByMortgageIDRequest maxVersionRequest = new GetMaxVersionByMortgageIDRequest();
 		maxVersionRequest.setMortgageIDReq(mortgageID);
 		final GetMaxVersionByMortgageIDResponse response = soapServiceClient
@@ -43,8 +45,9 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 	/***
 	 * This method is used to get all mortgages based on sorting parameter
 	 * mortgageID by calling backend SOAP service
+	 * @throws MortgageBusinessException 
 	 */
-	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) {
+	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) throws MortgageBusinessException {
 		final GetMortgagesRequest getMortgagesRequest = new GetMortgagesRequest();
 		getMortgagesRequest.setOrderBy(sortOrder);
 		final GetMortgagesResponse response = soapServiceClient.getAllMortgagesSoapCall(getMortgagesRequest);
@@ -53,8 +56,9 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 
 	/***
 	 * This method is used to create mortgages by calling backend SOAP service
+	 * @throws MortgageBusinessException 
 	 */
-	public String createMorgage(final MortgageDto reqEntity) {
+	public String createMorgage(final MortgageDto reqEntity) throws MortgageBusinessException {
 		CreateMortgageRequest createMortgageRequest = new MortgageSOAPRequestMapper().mapSOAPRequest(reqEntity);
 		CreateMortgageResponse response = soapServiceClient.createMortgageSoapCall(createMortgageRequest);
 		return response.getStatus();

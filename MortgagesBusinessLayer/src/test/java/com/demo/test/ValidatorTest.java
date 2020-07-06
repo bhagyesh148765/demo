@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 
 import com.demo.CustomTest;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.impl.MortgageServiceIMPL;
 import com.mortgage.businesslayer.demo.validator.offerdate.OfferDateValidator;
 import com.mortgage.businesslayer.demo.validator.version.VersionValidator;
@@ -58,7 +59,7 @@ public class ValidatorTest extends CustomTest {
 	}
 
 	@Test
-	public void isValid_VersionGreaterthanCurrent() throws ParseException {
+	public void isValid_VersionGreaterthanCurrent() throws ParseException, MortgageBusinessException {
 		versionValidator.setService(service);
 		Mockito.when(service.getMaxVersion(any(String.class))).thenReturn(3);
 		MortgageDto mortgageDto = new MortgageDto();
@@ -71,7 +72,7 @@ public class ValidatorTest extends CustomTest {
 	}
 
 	@Test
-	public void isValid_VersionLessthancurrent() throws ParseException {
+	public void isValid_VersionLessthancurrent() throws ParseException, MortgageBusinessException {
 		versionValidator.setService(service);
 		Mockito.when(service.getMaxVersion(any(String.class))).thenReturn(3);
 		MortgageDto mortgageDto = new MortgageDto();

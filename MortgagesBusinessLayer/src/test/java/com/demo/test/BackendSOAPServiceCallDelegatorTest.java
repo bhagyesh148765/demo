@@ -29,6 +29,7 @@ import com.generated.MortgageDtoType;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.soapservice.handler.BackendSOAPServiceCallDelegator;
 import com.mortgage.businesslayer.demo.soapservice.soapclient.MortgageSoapServiceClient;
 
@@ -39,10 +40,9 @@ public class BackendSOAPServiceCallDelegatorTest extends CustomTest {
 
 	@Mock
 	private MortgageSoapServiceClient soapServiceClient;
-	
 
 	@Test
-	public void getAllMortgagesTest() throws ParseException {
+	public void getAllMortgagesTest() throws ParseException, MortgageBusinessException {
 
 		final GetMortgagesResponse getMortgagesResponse = new GetMortgagesResponse();
 		final MortgageDtoType respnseDTO = new MortgageDtoType();
@@ -68,9 +68,36 @@ public class BackendSOAPServiceCallDelegatorTest extends CustomTest {
 		assertEquals(sdf.format(mortgageDtoResponse.getCreatedDateReq()), "14/03/2021");
 		assertEquals(sdf.format(mortgageDtoResponse.getOfferDateReq()), "14/03/2021");
 	}
+	
+	@Test(expected = MortgageBusinessException.class)
+	public void getAllMortgageseExceptionTest() throws ParseException, MortgageBusinessException {
+
+		final GetMortgagesResponse getMortgagesResponse = new GetMortgagesResponse();
+		final MortgageDtoType respnseDTO = new MortgageDtoType();
+		respnseDTO.setMortgageID("M1");
+		respnseDTO.setProductID("B1");
+		respnseDTO.setVersion(5);
+		respnseDTO.setOfferID("OF-6");
+		respnseDTO.setCreatedDate(getXMLGregorianCalendarByDate(Date_FORMAT.parse("14/03/2021")));
+		respnseDTO.setOfferDate(getXMLGregorianCalendarByDate(Date_FORMAT.parse("14/03/2021")));
+		respnseDTO.setIsOfferExpired("Y");
+		getMortgagesResponse.getMortgageDto().add(respnseDTO);
+		Mockito.doThrow(new MortgageBusinessException("backend communication")).when(soapServiceClient)
+		.getAllMortgagesSoapCall(any(GetMortgagesRequest.class));
+		
+		GetAllMortgagesConsumerResponse getAllMortgagesResponseDto = backendSOAPServiceCallDelegator
+				.getAllMortgages("createdDate");
+		assertNotNull(getAllMortgagesResponseDto);
+		Mortgages mortgageDtoResponse = getAllMortgagesResponseDto.getMortgages().get(0);
+		assertEquals(mortgageDtoResponse.getMortgageIDReq(), "M1");
+		assertEquals(mortgageDtoResponse.getVersionReq(), new Integer(5));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		assertEquals(sdf.format(mortgageDtoResponse.getCreatedDateReq()), "14/03/2021");
+		assertEquals(sdf.format(mortgageDtoResponse.getOfferDateReq()), "14/03/2021");
+	}
 
 	@Test
-	public void getAllMortgagesWithNullDateTest() throws ParseException {
+	public void getAllMortgagesWithNullDateTest() throws ParseException, MortgageBusinessException {
 
 		final GetMortgagesResponse getMortgagesResponse = new GetMortgagesResponse();
 		final MortgageDtoType respnseDTO = new MortgageDtoType();
@@ -110,7 +137,7 @@ public class BackendSOAPServiceCallDelegatorTest extends CustomTest {
 	}
 
 	@Test
-	public void getMaxVersionByMortgageIDTest() throws ParseException {
+	public void getMaxVersionByMortgageIDTest() throws ParseException, MortgageBusinessException {
 
 		GetMaxVersionByMortgageIDResponse response = new GetMaxVersionByMortgageIDResponse();
 		response.setMaxVersion(5);
@@ -122,7 +149,7 @@ public class BackendSOAPServiceCallDelegatorTest extends CustomTest {
 	}
 
 	@Test
-	public void createMortgagesTest() throws ParseException {
+	public void createMortgagesTest() throws ParseException, MortgageBusinessException {
 		CreateMortgageResponse response = new CreateMortgageResponse();
 		response.setStatus("Sucess");
 		Mockito.when(soapServiceClient.createMortgageSoapCall(any(CreateMortgageRequest.class))).thenReturn(response);

@@ -20,6 +20,7 @@ import com.demo.CustomTest;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
+import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.impl.MortgageServiceIMPL;
 import com.mortgage.businesslayer.demo.soapservice.handler.BackendSOAPServiceCallDelegator;
 
@@ -41,7 +42,7 @@ public class MortgageServiceIMPLTest extends CustomTest {
 	public static DateFormat Date_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Test
-	public void getAllMortgagesTest() throws ParseException {
+	public void getAllMortgagesTest() throws ParseException, MortgageBusinessException {
 
 		GetAllMortgagesConsumerResponse getAllMortgagesResponseOutputDto = new GetAllMortgagesConsumerResponse();
 		List<Mortgages> mortgageDtoList = new ArrayList<Mortgages>();
@@ -68,7 +69,7 @@ public class MortgageServiceIMPLTest extends CustomTest {
 	}
 
 	@Test
-	public void getMaxversionTest() throws ParseException {
+	public void getMaxversionTest() throws ParseException, MortgageBusinessException {
 		Mockito.when(backendSOAPServiceCallDelegator.getMaxVersionByMortgageID(any(String.class))).thenReturn(3);
 
 		Integer max = mortgageServiceIMPL.getMaxVersion("M1");
@@ -77,7 +78,7 @@ public class MortgageServiceIMPLTest extends CustomTest {
 	}
 
 	@Test
-	public void createMortgagesTest() throws ParseException {
+	public void createMortgagesTest() throws ParseException, MortgageBusinessException {
 		Mockito.when(backendSOAPServiceCallDelegator.createMorgage(any(MortgageDto.class))).thenReturn("Sucess");
 
 		MortgageDto mortgageDto = new MortgageDto();
