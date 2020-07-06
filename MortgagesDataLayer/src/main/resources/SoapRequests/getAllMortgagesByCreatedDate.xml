@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mor="http://www.barclays.org/mortgage/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mor:getMortgagesRequest>
+         <orderBy>createdDate</orderBy>
+      </mor:getMortgagesRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

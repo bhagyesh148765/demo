@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mor="http://www.barclays.org/mortgage/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <mor:createMortgageRequest>
+         <mortgageDto>
+            <mortgageID>M6</mortgageID>
+            <version>100</version>
+            <offerID>OI-1</offerID>
+            <productID>B1</productID>
+            <offerDate>2021-01-20T00:00:00.000+05:30</offerDate>
+
+         </mortgageDto>
+      </mor:createMortgageRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

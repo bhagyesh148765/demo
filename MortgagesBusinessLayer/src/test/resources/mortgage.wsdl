@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.barclays.org/mortgage/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="mortgage"
+	targetNamespace="http://www.barclays.org/mortgage/">
+	<wsdl:types>
+		<xsd:schema
+			targetNamespace="http://www.barclays.org/mortgage/">
+			<xsd:element name="getMortgagesRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="orderBy" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getMortgagesResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="mortgageDto"
+							type="tns:mortgageDtoType" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="mortgageDtoType">
+				<xsd:sequence>
+
+					<xsd:element name="mortgageID" type="xsd:string"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="version" type="xsd:int"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="offerID" type="xsd:string"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="productID" type="xsd:string"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="offerDate" type="xsd:dateTime"
+						maxOccurs="1" minOccurs="1">
+					</xsd:element>
+					<xsd:element name="createdDate" type="xsd:dateTime"
+						maxOccurs="1" minOccurs="0">
+					</xsd:element>
+					<xsd:element name="isOfferExpired" type="xsd:string"
+						maxOccurs="1" minOccurs="0">
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="getMaxVersionByMortgageIDRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="mortgageIDReq" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getMaxVersionByMortgageIDResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="maxVersionID" type="xsd:int"
+							maxOccurs="1" minOccurs="1"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="createMortgageRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="mortgageDto"
+							type="tns:mortgageDtoType"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="createMortgageResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+
+						<xsd:element name="status" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="getMortgagesRequest">
+		<wsdl:part name="parameters"
+			element="tns:getMortgagesRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMortgagesResponse">
+		<wsdl:part name="parameters"
+			element="tns:getMortgagesResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMaxVersionByMortgageIDRequest">
+		<wsdl:part name="parameters"
+			element="tns:getMaxVersionByMortgageIDRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMaxVersionByMortgageIDResponse">
+		<wsdl:part name="parameters"
+			element="tns:getMaxVersionByMortgageIDResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createMortgageRequest">
+		<wsdl:part name="parameters"
+			element="tns:createMortgageRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createMortgageResponse">
+		<wsdl:part name="parameters"
+			element="tns:createMortgageResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="mortgage">
+		<wsdl:operation name="getMortgages">
+			<wsdl:input message="tns:getMortgagesRequest"></wsdl:input>
+			<wsdl:output message="tns:getMortgagesResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getMaxVersionByMortgageID">
+			<wsdl:input message="tns:getMaxVersionByMortgageIDRequest"></wsdl:input>
+			<wsdl:output
+				message="tns:getMaxVersionByMortgageIDResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createMortgage">
+			<wsdl:input message="tns:createMortgageRequest"></wsdl:input>
+			<wsdl:output message="tns:createMortgageResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="mortgageSOAP" type="tns:mortgage">
+
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getMortgages">
+
+			<soap:operation
+				soapAction="http://www.barclays.org/mortgage/getMortgages" />
+			<wsdl:input>
+
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getMaxVersionByMortgageID">
+
+			<soap:operation
+				soapAction="http://www.barclays.org/mortgage/getMaxVersionByMortgageID" />
+			<wsdl:input>
+
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createMortgage">
+
+			<soap:operation
+				soapAction="http://www.barclays.org/mortgage/createMortgage" />
+			<wsdl:input>
+
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="mortgage">
+		<wsdl:port binding="tns:mortgageSOAP" name="mortgageSOAP">
+			<soap:address location="http://www.example.org/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
