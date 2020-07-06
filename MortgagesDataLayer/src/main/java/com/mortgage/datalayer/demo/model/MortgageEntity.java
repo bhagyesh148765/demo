@@ -141,11 +141,5 @@ public class MortgageEntity {
 
 	}
 
-	@Override
-	public String toString() {
-		return "MortgageEntity [mortgageID=" + mortgageID + ", version=" + version + ",  offerID=" + offerID
-				+ ", productID=" + productID + ", offerDate=" + offerDate + ", createdDate=" + createdDate
-				+ ", isOfferExpired=" + isOfferExpired + "]";
-	}
 
 }

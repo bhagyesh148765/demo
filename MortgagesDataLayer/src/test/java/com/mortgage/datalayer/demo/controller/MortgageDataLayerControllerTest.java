@@ -106,4 +106,24 @@ public class MortgageDataLayerControllerTest extends CustomTest {
 		String content = mvcResult.getResponse().getContentAsString();
 		assertEquals(content, "Mortgage creation is Successfull");
 	}
+	
+	@Test
+	public void createMortgageUpdateTest() throws Exception {
+		String uri = "/Mortgages/createMortgage";
+		CreateMortgageRestRequest createMortgageRestRequest = new CreateMortgageRestRequest();
+		createMortgageRestRequest.setMortgageIDReq("M3");
+		createMortgageRestRequest.setOfferDateReq(Date_FORMAT.parse("14/03/2022"));
+		createMortgageRestRequest.setProductIDReq("B111111");
+		createMortgageRestRequest.setOfferIDReq("OI-1");
+		createMortgageRestRequest.setVersionReq(3);
+		String inputJson = super.mapToJson(createMortgageRestRequest);
+		MvcResult mvcResult = mvc.perform(
+				MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
+				.andReturn();
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+		String content = mvcResult.getResponse().getContentAsString();
+		assertEquals(content, "Mortgage creation is Successfull");
+	}
+	
 }
