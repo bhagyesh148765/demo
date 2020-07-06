@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mortgage.businesslayer.demo.aop.TrackTime;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
@@ -25,15 +26,19 @@ public class MortgageBusinessLayerController {
 	MortgageService service;
 
 	/**
-	 * This controller method is used to receive getmortgages request from consumer
-	 * and pass it on to service components and send details back to consumer post request processing 
+	 * This controller method is used to receive get Mortgages request from consumer
+	 * and pass it on to service components and send details back to consumer post
+	 * request processing
+	 * 
 	 * 
 	 * @param orderBy
 	 * @return GetAllMortgagesResponseDto List of mortgages
-	 * @throws MortgageBusinessException 
+	 * @throws MortgageBusinessException
 	 */
 	@GetMapping
-	public ResponseEntity<GetAllMortgagesConsumerResponse> getAllMortgages(@RequestParam("orderBy") String orderBy) throws MortgageBusinessException {
+	@TrackTime
+	public ResponseEntity<GetAllMortgagesConsumerResponse> getAllMortgages(final @RequestParam("orderBy") String orderBy)
+			throws MortgageBusinessException {
 		GetAllMortgagesConsumerResponse mortgageResponseDto = service.getAllMortgages(orderBy);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Access-Control-Allow-Origin", "*");
@@ -44,14 +49,16 @@ public class MortgageBusinessLayerController {
 	 * This controller method is used to receive create mortgage request from
 	 * consumer and pass it on to service components
 	 * 
+	 * 
 	 * @param mortgageDto
 	 * @return
-	 * @throws MortgageBusinessException 
+	 * @throws MortgageBusinessException
 	 */
 	@PostMapping("createMortgage")
-	public ResponseEntity<String> createMortgage(@Valid @RequestBody MortgageDto mortgageDto) throws MortgageBusinessException {
-
-		String status = service.createMortgage(mortgageDto);
+	@TrackTime
+	public ResponseEntity<String> createMortgage(final @Valid @RequestBody MortgageDto mortgageDto)
+			throws MortgageBusinessException {
+		final String status = service.createMortgage(mortgageDto);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Access-Control-Allow-Origin", "*");
 		return new ResponseEntity<String>(status, new HttpHeaders(), HttpStatus.CREATED);

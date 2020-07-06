@@ -12,6 +12,7 @@ import com.generated.GetMaxVersionByMortgageIDRequest;
 import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.generated.GetMortgagesRequest;
 import com.generated.GetMortgagesResponse;
+import com.mortgage.businesslayer.demo.aop.TrackTime;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
@@ -34,6 +35,7 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 	 * backend SOAP service
 	 * @throws MortgageBusinessException 
 	 */
+	@TrackTime
 	public Integer getMaxVersionByMortgageID(final String mortgageID) throws MortgageBusinessException {
 		final GetMaxVersionByMortgageIDRequest maxVersionRequest = new GetMaxVersionByMortgageIDRequest();
 		maxVersionRequest.setMortgageIDReq(mortgageID);
@@ -47,6 +49,7 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 	 * mortgageID by calling backend SOAP service
 	 * @throws MortgageBusinessException 
 	 */
+	@TrackTime
 	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) throws MortgageBusinessException {
 		final GetMortgagesRequest getMortgagesRequest = new GetMortgagesRequest();
 		getMortgagesRequest.setOrderBy(sortOrder);
@@ -58,6 +61,7 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 	 * This method is used to create mortgages by calling backend SOAP service
 	 * @throws MortgageBusinessException 
 	 */
+	@TrackTime
 	public String createMorgage(final MortgageDto reqEntity) throws MortgageBusinessException {
 		CreateMortgageRequest createMortgageRequest = new MortgageSOAPRequestMapper().mapSOAPRequest(reqEntity);
 		CreateMortgageResponse response = soapServiceClient.createMortgageSoapCall(createMortgageRequest);

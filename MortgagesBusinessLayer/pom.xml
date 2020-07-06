@@ -60,6 +60,21 @@
 			<artifactId>junit-platform-commons</artifactId>
 			<version>1.5.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-test</artifactId>
+			<version>2.4.2.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -99,6 +114,7 @@
 						<exclude>**/com/generated/*</exclude>
 						<exclude>**/com/mortgage/businesslayer/demo/soapservice/config/*</exclude>
 						<exclude>**/com/mortgage/businesslayer/demo/constant/*</exclude>
+						<exclude>**/com/mortgage/businesslayer/demo/exception/*</exclude>
 					</excludes>
 				</configuration>
 

@@ -8,35 +8,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.ConstraintValidatorContext.ConstraintViolationBuilder;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.demo.CustomTest;
 import com.generated.GetMortgagesResponse;
 import com.generated.MortgageDtoType;
 import com.mortgage.businesslayer.demo.controller.MortgageBusinessLayerController;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
-import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
-import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.service.MortgageService;
 import com.mortgage.businesslayer.demo.soapservice.soapclient.MortgageSoapServiceClient;
-import com.mortgage.businesslayer.demo.validator.version.VersionValidator;
 @WebAppConfiguration
 public class MortgageBusinessLayerControllerTest extends CustomTest {
 
