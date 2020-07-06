@@ -125,53 +125,49 @@ public class MortgageBusinessLayerControllerTest extends CustomTest {
 		assertEquals(sdf.format(mortgageDto.getOfferDateReq()), "20/07/2017");
 	}
 
-	@Mock
-	ConstraintValidatorContext context;
-	@Mock
-	ConstraintViolationBuilder builder;
-	@Mock
-	ConstraintValidatorContext constraintValidatorContext;
-	@Mock
-	private VersionValidator versionValidator;
-
-	@Autowired
-	private WebApplicationContext webApplicationContext;
-
-    LocalValidatorFactoryBean validator;
-    
-	@Test
-	public void createMortgageTest() throws Exception {
-
-		SpringConstraintValidatorFactory springConstraintValidatorFactory = new SpringConstraintValidatorFactory(
-				webApplicationContext.getAutowireCapableBeanFactory());
-		validator = new LocalValidatorFactoryBean();
-		validator.setConstraintValidatorFactory(springConstraintValidatorFactory);
-		validator.setApplicationContext(webApplicationContext);
-		validator.afterPropertiesSet();
-
-		context = Mockito.mock(ConstraintValidatorContext.class);
-		builder = Mockito.mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
-		Mockito.when(context.buildConstraintViolationWithTemplate(Mockito.anyString())).thenReturn(builder);
-		Mockito.when(service.getMaxVersion(any(String.class))).thenReturn(3);
-		Mockito.when(versionValidator.isValid(any(MortgageDto.class), any(ConstraintValidatorContext.class)))
-				.thenReturn(true);
-		String uri = "/MortgagesBusiness/createMortgage";
-		MortgageDto mortgageDto = new MortgageDto();
-		mortgageDto.setMortgageIDReq("M9");
-		mortgageDto.setOfferDateReq(Date_FORMAT.parse("14/03/2021"));
-		mortgageDto.setProductIDReq("B1");
-		mortgageDto.setOfferIDReq("OI-1");
-		mortgageDto.setVersionReq(1);
-		Mockito.when(service.createMortgage(any(MortgageDto.class))).thenReturn("Mortgage creation is Successfull");
-		String inputJson = super.mapToJson(mortgageDto);
-		MvcResult mvcResult = mvc.perform(
-				MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson))
-				.andReturn();
-		int status = mvcResult.getResponse().getStatus();
-		assertEquals(200, status);
-		String content = mvcResult.getResponse().getContentAsString();
-		System.out.println(content);
-		assertEquals(content, "Mortgage creation is Successfull");
-	}
-
+	/*
+	 * @Mock ConstraintValidatorContext context;
+	 * 
+	 * @Mock ConstraintViolationBuilder builder;
+	 * 
+	 * @Mock ConstraintValidatorContext constraintValidatorContext;
+	 * 
+	 * @Mock private VersionValidator versionValidator;
+	 * 
+	 * @Autowired private WebApplicationContext webApplicationContext;
+	 * 
+	 * LocalValidatorFactoryBean validator;
+	 * 
+	 * @Test public void createMortgageTest() throws Exception {
+	 * 
+	 * SpringConstraintValidatorFactory springConstraintValidatorFactory = new
+	 * SpringConstraintValidatorFactory(
+	 * webApplicationContext.getAutowireCapableBeanFactory()); validator = new
+	 * LocalValidatorFactoryBean();
+	 * validator.setConstraintValidatorFactory(springConstraintValidatorFactory);
+	 * validator.setApplicationContext(webApplicationContext);
+	 * validator.afterPropertiesSet();
+	 * 
+	 * context = Mockito.mock(ConstraintValidatorContext.class); builder =
+	 * Mockito.mock(ConstraintValidatorContext.ConstraintViolationBuilder.class);
+	 * Mockito.when(context.buildConstraintViolationWithTemplate(Mockito.anyString()
+	 * )).thenReturn(builder);
+	 * Mockito.when(service.getMaxVersion(any(String.class))).thenReturn(3);
+	 * Mockito.when(versionValidator.isValid(any(MortgageDto.class),
+	 * any(ConstraintValidatorContext.class))) .thenReturn(true); String uri =
+	 * "/MortgagesBusiness/createMortgage"; MortgageDto mortgageDto = new
+	 * MortgageDto(); mortgageDto.setMortgageIDReq("M9");
+	 * mortgageDto.setOfferDateReq(Date_FORMAT.parse("14/03/2021"));
+	 * mortgageDto.setProductIDReq("B1"); mortgageDto.setOfferIDReq("OI-1");
+	 * mortgageDto.setVersionReq(1);
+	 * Mockito.when(service.createMortgage(any(MortgageDto.class))).
+	 * thenReturn("Mortgage creation is Successfull"); String inputJson =
+	 * super.mapToJson(mortgageDto); MvcResult mvcResult = mvc.perform(
+	 * MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE
+	 * ).content(inputJson)) .andReturn(); int status =
+	 * mvcResult.getResponse().getStatus(); assertEquals(200, status); String
+	 * content = mvcResult.getResponse().getContentAsString();
+	 * System.out.println(content); assertEquals(content,
+	 * "Mortgage creation is Successfull"); }
+	 */
 }
