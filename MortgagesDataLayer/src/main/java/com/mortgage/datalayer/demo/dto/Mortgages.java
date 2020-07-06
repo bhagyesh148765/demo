@@ -25,7 +25,7 @@ public class Mortgages implements Serializable {
 	private Date offerDateReq;
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "IST")
 	private Date createdDateReq;
-	private String isOfferedExpired;
+	private String isOfferExpired;
 
 	/**
 	 * @return the mortgageIDReq
@@ -128,17 +128,17 @@ public class Mortgages implements Serializable {
 	}
 
 	/**
-	 * @return the isOfferedExpired
+	 * @return the isOfferExpired
 	 */
-	public String getIsOfferedExpired() {
-		return isOfferedExpired;
+	public String getIsOfferExpired() {
+		return isOfferExpired;
 	}
 
 	/**
-	 * @param isOfferedExpired the isOfferedExpired to set
+	 * @param isOfferExpired the isOfferExpired to set
 	 */
-	public void setIsOfferedExpired(String isOfferedExpired) {
-		this.isOfferedExpired = isOfferedExpired;
+	public void setIsOfferExpired(String isOfferExpired) {
+		this.isOfferExpired = isOfferExpired;
 	}
 
 	/**

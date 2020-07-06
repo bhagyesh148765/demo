@@ -24,7 +24,7 @@ public class MortgageRestResponseMapper {
 			mortgagesResponseObj.setProductIDReq(dto.getProductID());
 			mortgagesResponseObj.setCreatedDateReq(dto.getCreatedDate());
 			mortgagesResponseObj.setOfferDateReq(dto.getOfferDate());
-			mortgagesResponseObj.setIsOfferedExpired(dto.getIsOfferExpired());
+			mortgagesResponseObj.setIsOfferExpired(dto.getIsOfferExpired());
 			return mortgagesResponseObj;
 		}).collect(Collectors.toList());
 		return new GetMortgagesRestResponse(mortgageResponseDtoList);
