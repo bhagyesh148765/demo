@@ -1,6 +1,5 @@
 package com.mortgage.datalayer.demo;
 
-import static com.mortgage.datalayer.demo.constant.MortgageConstant.Date_FORMAT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -9,7 +8,6 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPMessage;
@@ -22,9 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
-import org.springframework.ws.server.endpoint.annotation.RequestPayload;
-import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.generated.CreateMortgageRequest;
 import com.generated.CreateMortgageResponse;
@@ -33,8 +28,6 @@ import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.generated.GetMortgagesRequest;
 import com.generated.GetMortgagesResponse;
 import com.generated.MortgageDtoType;
-import com.mortgage.datalayer.demo.dto.MortgageDto;
-import com.mortgage.datalayer.demo.model.MortgageEntity;
 import com.mortgage.datalayer.demo.repository.MortgageRepositoryDao;
 import com.mortgage.datalayer.demo.soapservice.endpoint.MortgagesSoapServiceEndpoint;
 

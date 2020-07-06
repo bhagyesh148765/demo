@@ -23,7 +23,7 @@ public class MortgageRepositoryDaoIMPL implements MortgageRepositoryDao {
 	 * @param entity
 	 * @return the entities
 	 */
-	public List<MortgageDto> findAll(final String sort) {
+	public List<MortgageDto> findAll() {
 		ConcurrentLinkedQueue<MortgageEntity> list = MortgageDatabase.getDataBaseRecords();
 		return list.stream().map(dto -> {
 			final MortgageDto respnseDTO = new MortgageDto();

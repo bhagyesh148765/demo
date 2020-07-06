@@ -42,7 +42,7 @@ public class MortgageDataLayerService {
 	 */
 	public List<MortgageDto> getAllMortgages(String sortOrder) {
 		log.info("getAllMortgages method execution  START  at ", dateFormat.format(new Date()));
-		List<MortgageDto> mortgageList = repository.findAll(sortOrder);
+		List<MortgageDto> mortgageList = repository.findAll();
 		Comparator<MortgageDto> comparator = null;
 		switch (sortOrder) {
 		case CREATED_DATE:

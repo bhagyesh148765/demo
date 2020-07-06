@@ -13,7 +13,7 @@ public interface MortgageRepositoryDao {
 	 * @param entity
 	 * @return the entities
 	 */
-	List<MortgageDto> findAll(String sort);
+	List<MortgageDto> findAll();
 
 	/**
 	 * Saves an entity
