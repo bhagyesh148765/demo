@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generated.CreateMortgageResponse;
 import com.mortgage.businesslayer.demo.aop.TrackTime;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
@@ -56,12 +57,12 @@ public class MortgageBusinessLayerController {
 	 */
 	@PostMapping("createMortgage")
 	@TrackTime
-	public ResponseEntity<String> createMortgage(final @Valid @RequestBody MortgageDto mortgageDto)
+	public ResponseEntity<CreateMortgageResponse> createMortgage(final @Valid @RequestBody MortgageDto mortgageDto)
 			throws MortgageBusinessException {
-		final String status = service.createMortgage(mortgageDto);
+		final CreateMortgageResponse status = service.createMortgage(mortgageDto);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Access-Control-Allow-Origin", "*");
-		return new ResponseEntity<String>(status, new HttpHeaders(), HttpStatus.CREATED);
+		return new ResponseEntity<CreateMortgageResponse>(status, new HttpHeaders(), HttpStatus.CREATED);
 	}
 
 }

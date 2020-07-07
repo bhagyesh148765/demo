@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.demo.CustomTest;
+import com.generated.CreateMortgageResponse;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.dto.Mortgages;
@@ -80,18 +81,17 @@ public class MortgageServiceIMPLTest extends CustomTest {
 
 	@Test
 	public void createMortgagesTest() throws ParseException, MortgageBusinessException {
-		Mockito.when(backendSOAPServiceCallDelegator.createMorgage(any(MortgageDto.class))).thenReturn("Sucess");
-
+		//CreateMortgageResponse statusBackend=new CreateMortgageResponse();
+		//Mockito.when(backendSOAPServiceCallDelegator.createMorgage(any(MortgageDto.class))).thenReturn("Success");
 		MortgageDto mortgageDto = new MortgageDto();
 		mortgageDto.setMortgageIDReq("M9");
 		mortgageDto.setOfferDateReq(Date_FORMAT.parse("14/03/2021"));
 		mortgageDto.setProductIDReq("B1");
 		mortgageDto.setOfferIDReq("OI-1");
 		mortgageDto.setVersionReq(1);
-
-		String status = mortgageServiceIMPL.createMortgage(mortgageDto);
+		CreateMortgageResponse status = mortgageServiceIMPL.createMortgage(mortgageDto);
 		assertNotNull(status);
-		assertEquals(status, "Sucess");
+		assertEquals(status.getStatus(), "Success");
 	}
 
 }

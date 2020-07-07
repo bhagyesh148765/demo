@@ -2,6 +2,7 @@ package com.mortgage.businesslayer.demo.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,20 +12,20 @@ import com.mortgage.businesslayer.demo.validator.version.ValidateVersion;
 @ValidateVersion
 public class MortgageDto {
 
-	@NotNull(message = "Passport should have atleast 2 characters")
+	@NotBlank(message = "mortgageID should not be null or blank ")
 	private String mortgageIDReq;
-	@NotNull
+	@NotNull(message = "versionReq should not be null or blank")
 	private Integer versionReq;
-
+	@NotNull(message = "offerIDReq should not be null or blank")
 	private String offerIDReq;
-
+	@NotNull(message = "productIDReq should not be null or blank")
 	private String productIDReq;
-
+	@NotNull(message = "offerDateReq should not be null or blank")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@ValidateOfferDate
 	private Date offerDateReq;
-	@JsonFormat(pattern = "dd/MM/yyyy")
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 
 	/**
 	 * @return the mortgageIDReq
@@ -99,7 +100,6 @@ public class MortgageDto {
 	public void setOfferDateReq(Date offerDateReq) {
 		this.offerDateReq = offerDateReq;
 	}
-
 
 	/**
 	 * 

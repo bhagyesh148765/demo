@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.generated.CreateMortgageResponse;
+import com.mortgage.businesslayer.demo.aop.CreateMortgage;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesConsumerResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
@@ -24,7 +26,7 @@ public class MortgageServiceIMPL implements MortgageService {
 
 	@Autowired
 	public void setProtocallDelegator(ApplicationContext context) {
-		System.out.println("protocall   " + protocall);
+		log.info(protocall + "is used for Routing requests");
 		protocallDelegator = (ProtocallDelegator) context.getBean(protocall);
 	}
 
@@ -45,8 +47,13 @@ public class MortgageServiceIMPL implements MortgageService {
 	 * @throws MortgageBusinessException 
 	 * @throws RecordNotFoundException
 	 */
-	public String createMortgage(MortgageDto reqEntity) throws MortgageBusinessException {
-		return protocallDelegator.createMorgage(reqEntity);
+	@CreateMortgage	
+	public CreateMortgageResponse createMortgage(MortgageDto reqEntity) throws MortgageBusinessException {
+		
+		CreateMortgageResponse response=new CreateMortgageResponse();
+		response.setStatus("Success");
+		return response;
+
 	}
 
 	public Integer getMaxVersion(String mortgageID) throws MortgageBusinessException {
