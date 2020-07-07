@@ -18,11 +18,11 @@ public class MortgageDatabase {
 	private static void initializeDataBase() {
 		try {
 			mortgageDataBaseRecords.add(new MortgageEntity("M2", 3, "OI-1", "B1", Date_FORMAT.parse("20/04/2020"),
-					Date_FORMAT.parse("14/03/2017"), "N"));
+					Date_FORMAT.parse("14/03/2017"), "Y"));
 			mortgageDataBaseRecords.add(new MortgageEntity("M1", 1, "OI-1", "B1", Date_FORMAT.parse("20/07/2017"),
-					Date_FORMAT.parse("20/04/2015"), "N"));
+					Date_FORMAT.parse("20/04/2015"), "Y"));
 			mortgageDataBaseRecords.add(new MortgageEntity("M2", 2, "OI-2", "B1", Date_FORMAT.parse("20/06/2017"),
-					Date_FORMAT.parse("20/05/2015"), "N"));
+					Date_FORMAT.parse("20/05/2015"), "Y"));
 			mortgageDataBaseRecords
 					.add(new MortgageEntity("M3", 3, "OI-3", "B2", Date_FORMAT.parse("21/05/2021"), new Date(), "N"));
 		} catch (Exception e) {

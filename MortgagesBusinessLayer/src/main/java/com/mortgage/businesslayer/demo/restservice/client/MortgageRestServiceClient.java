@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,6 +30,13 @@ public class MortgageRestServiceClient {
 	@Autowired
 	RestTemplate restTemplate;
 
+	@Value("${restURLGetMaxVersion}")
+	private String restURLGetMaxVersion;
+	@Value("${restURLGetAllMorgages}")
+	private String restURLGetAllMorgages;
+	@Value("${restURLCreateMorgages}")
+	private String restURLCreateMorgages;
+
 	/**
 	 * Rest client call to fetch max version number
 	 * 
@@ -39,8 +47,7 @@ public class MortgageRestServiceClient {
 	public Integer getmaxVersionByMorgageIDRestCall(final String mortgageID) throws MortgageBusinessException {
 		try {
 			log.info("entering into getmaxVersionByMorgageIDRestCall method ");
-			final String uri = "https://localhost:8080/MortgageDataLayer/Mortgages/getMaxVersion?mortgageID="
-					+ mortgageID;
+			final String uri = restURLGetMaxVersion + mortgageID;
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -66,7 +73,7 @@ public class MortgageRestServiceClient {
 			throws MortgageBusinessException {
 		log.info("entering into getAllMortgagesRestCall method ");
 		try {
-			final String uri = "https://localhost:8080/MortgageDataLayer/Mortgages?orderBy=" + sortOrder;
+			final String uri = restURLGetAllMorgages + sortOrder;
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("orderBy", "createdDate");
 			HttpHeaders headers = new HttpHeaders();
@@ -93,7 +100,7 @@ public class MortgageRestServiceClient {
 	 */
 	public String createMortgageRestCall(final MortgageDto reqEntity) throws MortgageBusinessException {
 		try {
-			final String posturi = "https://localhost:8080/MortgageDataLayer/Mortgages/createMortgage";
+			final String posturi = restURLCreateMorgages;
 			HttpHeaders headers = new HttpHeaders();
 			HttpEntity<?> request = new HttpEntity<>(reqEntity, headers);
 			ResponseEntity<String> status = restTemplate.postForEntity(posturi, request, String.class);

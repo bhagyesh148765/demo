@@ -1,7 +1,6 @@
 package com.demo.test;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -11,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
@@ -22,8 +22,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
+import com.demo.CustomTest;
 import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.mortgage.businesslayer.demo.dto.GetAllMortgagesBkndRestResponse;
 import com.mortgage.businesslayer.demo.dto.MortgageDto;
@@ -32,7 +34,7 @@ import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 import com.mortgage.businesslayer.demo.restservice.client.MortgageRestServiceClient;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MortgageRestServiceClientTest {
+public class MortgageRestServiceClientTest extends CustomTest {
 
 	public static DateFormat Date_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	@Mock
@@ -40,6 +42,12 @@ public class MortgageRestServiceClientTest {
 
 	@InjectMocks
 	private MortgageRestServiceClient client;
+
+	@Before
+	public void setup() {
+		// client.setRestURLCreateMorgages("any");
+		ReflectionTestUtils.setField(client, "restURLCreateMorgages", "http://someurl");
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
@@ -54,18 +62,17 @@ public class MortgageRestServiceClientTest {
 		assertEquals(max, new Integer(5));
 	}
 
-
 	@Test(expected = MortgageBusinessException.class)
 	public void getMaxVersionByMortgageIDExceptionTest() throws MortgageBusinessException {
 		GetMaxVersionByMortgageIDResponse maxVersionDataLayerReponseDto = new GetMaxVersionByMortgageIDResponse();
 		maxVersionDataLayerReponseDto.setMaxVersion(5);
 		Mockito.doThrow(new NullPointerException("backend communication")).when(restTemplate)
-		.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class),this.anyClass());
+				.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), this.anyClass());
 		Integer max = client.getmaxVersionByMorgageIDRestCall("5");
 		assertNotNull(max);
 		assertEquals(max, new Integer(5));
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void getAllMortgagesTest() throws ParseException, MortgageBusinessException {
@@ -95,13 +102,13 @@ public class MortgageRestServiceClientTest {
 		mortgageDto.setOfferIDReq("OI-1");
 		mortgageDto.setVersionReq(1);
 		Mockito.doThrow(new NullPointerException("backend communication")).when(restTemplate)
-		.postForEntity(any(String.class), any(HttpEntity.class), this.anyClass());
+				.postForEntity(any(String.class), any(HttpEntity.class), this.anyClass());
 		String status = client.createMortgageRestCall(mortgageDto);
 		assertNotNull(status);
 		assertEquals(status, "Success");
 
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void createMortgagesTest() throws ParseException, MortgageBusinessException {
@@ -130,7 +137,7 @@ public class MortgageRestServiceClientTest {
 		assertEquals(sdf.format(mortgageDtoResponse.getCreatedDateReq()), "14/03/2021");
 		assertEquals(sdf.format(mortgageDtoResponse.getOfferDateReq()), "14/03/2021");
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test(expected = MortgageBusinessException.class)
 	public void createMortgagesExceptionTest() throws ParseException, MortgageBusinessException {
@@ -148,7 +155,7 @@ public class MortgageRestServiceClientTest {
 		mortgageDtoList.add(respnseDTO);
 		getMortgagesResponse.setMortgages(mortgageDtoList);
 		Mockito.doThrow(new NullPointerException("backend communication")).when(restTemplate)
-		.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), this.anyClass());
+				.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), this.anyClass());
 		GetAllMortgagesBkndRestResponse response = client.getAllMortgagesRestCall("createdDate");
 		assertNotNull(response);
 		Mortgages mortgageDtoResponse = response.getMortgages().get(0);
@@ -158,7 +165,6 @@ public class MortgageRestServiceClientTest {
 		assertEquals(sdf.format(mortgageDtoResponse.getCreatedDateReq()), "14/03/2021");
 		assertEquals(sdf.format(mortgageDtoResponse.getOfferDateReq()), "14/03/2021");
 	}
-
 
 	private class AnyClassMatcher implements ArgumentMatcher<Class<?>> {
 		@Override
