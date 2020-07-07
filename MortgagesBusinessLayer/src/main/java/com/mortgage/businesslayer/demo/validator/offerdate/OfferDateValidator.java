@@ -1,5 +1,4 @@
 package com.mortgage.businesslayer.demo.validator.offerdate;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,7 +20,7 @@ public class OfferDateValidator implements ConstraintValidator<ValidateOfferDate
 		Date sixMonthsDate = cal.getTime();
 		context.disableDefaultConstraintViolation();
 		context.buildConstraintViolationWithTemplate(
-				"Offer Date Error, Input Offer Date " + value + " is less than six month future Date\"")
+				"Offer Date Error, Input Offer Date " + value + " is less than six month future Date")
 				.addConstraintViolation();
 		return sixMonthsDate.before(value);
 	}

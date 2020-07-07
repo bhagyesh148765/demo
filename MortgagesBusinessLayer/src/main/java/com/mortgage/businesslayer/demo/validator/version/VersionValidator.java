@@ -28,8 +28,8 @@ public class VersionValidator implements ConstraintValidator<ValidateVersion, Mo
 			if (mortgageDto.getVersionReq() < maxVersion) {
 				context.disableDefaultConstraintViolation();
 				context.buildConstraintViolationWithTemplate(
-						"Version Error, Input Version " + maxVersion + " for Mortgage id "
-								+ mortgageDto.getMortgageIDReq() + " is less than max version available in Database")
+						"Version Error, Input Version " + mortgageDto.getVersionReq() + " for Mortgage id "
+								+ mortgageDto.getMortgageIDReq() + " is less than max version "+maxVersion+" available in Database")
 						.addConstraintViolation();
 				return false;
 			}
