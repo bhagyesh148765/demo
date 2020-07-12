@@ -24,7 +24,6 @@ public class VersionValidator implements ConstraintValidator<ValidateVersion, Mo
 		int maxVersion;
 		try {
 			maxVersion = service.getMaxVersion(mortgageDto.getMortgageIDReq());
-
 			if (mortgageDto.getVersionReq() < maxVersion) {
 				context.disableDefaultConstraintViolation();
 				context.buildConstraintViolationWithTemplate(

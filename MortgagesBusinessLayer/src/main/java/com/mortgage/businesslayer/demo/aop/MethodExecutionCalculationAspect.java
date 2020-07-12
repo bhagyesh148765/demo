@@ -11,9 +11,23 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Aspect
 @Configuration
 @EnableAspectJAutoProxy
+/**
+ * This class is used to calculate time taken by method to execute business
+ * logic This is annotation based invocation, method being specified by
+ * TrackTime annotation is eligible for time calculation
+ * 
+ * @author bhagyesh
+ *
+ */
 public class MethodExecutionCalculationAspect {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	/**
+	 * AOP method to calculate time for business execution
+	 * 
+	 * @param joinPoint
+	 * @throws Throwable
+	 */
 	@Around("@annotation( com.mortgage.businesslayer.demo.aop.TrackTime)")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		String METHOD_CLASS_NAME="method " +joinPoint.getSignature().getName();

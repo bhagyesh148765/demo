@@ -4,8 +4,17 @@ import java.util.Date;
 
 public class ErrorDetails {
 
+	/**
+	 * ]Current timestamp
+	 */
 	private Date timestamp;
+	/**
+	 * error message
+	 */
 	private String message;
+	/**
+	 * error message details
+	 */
 	private String details;
 
 	public ErrorDetails(Date timestamp, String message, String details) {

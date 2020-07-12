@@ -15,7 +15,6 @@ import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.service.ProtocallDelegator;
 
 @Aspect
-
 @Configuration
 public class CreateMortgageAspect {
 

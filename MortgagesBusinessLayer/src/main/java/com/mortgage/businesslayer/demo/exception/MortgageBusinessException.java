@@ -2,21 +2,36 @@ package com.mortgage.businesslayer.demo.exception;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Custom exception class to catch exception scenario at every layer in pplication
+ * @author bhagyesh
+ *
+ */
 public class MortgageBusinessException extends Exception {
 
 	private static final long serialVersionUID = 143320424902L;
 
+	/**
+	 * HTTP Status
+	 */
 	private HttpStatus status;
 
-	public MortgageBusinessException(String message) {
+	/**
+	 * constructor for Setting up exception message 
+	 * @param message
+	 */
+	public MortgageBusinessException(final String message) {
 		super(message);
 	}
-
-	public MortgageBusinessException(String message, Throwable t) {
+	/**
+	 * constructor for Setting up exception message and error instance
+	 * @param message
+	 */
+	public MortgageBusinessException(final String message, final Throwable t) {
 		super(message, t);
 	}
 	
-	public MortgageBusinessException(String message, Throwable t,HttpStatus status) {
+	public MortgageBusinessException(final String message, final Throwable t, final HttpStatus status) {
 		super(message, t);
 	}
 

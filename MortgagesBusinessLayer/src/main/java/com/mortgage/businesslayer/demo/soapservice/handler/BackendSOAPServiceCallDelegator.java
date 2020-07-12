@@ -23,9 +23,13 @@ import com.mortgage.businesslayer.demo.soapservice.soapclient.MortgageSoapServic
 
 @Service("SOAP_SERVICE")
 @Qualifier("SOAP_SERVICE")
+/**
+ * This class represents SOAP Gateway for calling SOAP Services 
+ * @author bhagyesh
+ *
+ */
 public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 
-	private static final Logger log = LoggerFactory.getLogger(BackendSOAPServiceCallDelegator.class);
 
 	@Autowired
 	private MortgageSoapServiceClient soapServiceClient;
@@ -46,7 +50,7 @@ public class BackendSOAPServiceCallDelegator implements ProtocallDelegator {
 
 	/***
 	 * This method is used to get all mortgages based on sorting parameter
-	 * mortgageID by calling backend SOAP service
+	 * sortOrder by calling backend SOAP service
 	 * @throws MortgageBusinessException 
 	 */
 	@TrackTime

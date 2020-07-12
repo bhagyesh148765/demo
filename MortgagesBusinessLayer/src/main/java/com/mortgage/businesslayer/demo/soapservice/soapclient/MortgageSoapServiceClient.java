@@ -12,12 +12,25 @@ import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.generated.GetMortgagesRequest;
 import com.generated.GetMortgagesResponse;
 import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
-import com.mortgage.businesslayer.demo.restservice.client.MortgageRestServiceClient;
 
+/**
+ * SOAP Service client classe
+ * 
+ * @author bhagyesh
+ *
+ */
 public class MortgageSoapServiceClient extends WebServiceGatewaySupport {
 
 	private static final Logger log = LoggerFactory.getLogger(MortgageSoapServiceClient.class);
 
+	/**
+	 * This method in SoapServiceClient is used invoke getmaxVersionByMorgage call
+	 * on SOAP Layer at backend application for given mortgage ID
+	 * 
+	 * @param maxVersionRequest
+	 * @return GetMaxVersionByMortgageIDResponse
+	 * @throws MortgageBusinessException
+	 */
 	public GetMaxVersionByMortgageIDResponse getmaxVersionByMorgageIDSoapCall(
 			final GetMaxVersionByMortgageIDRequest maxVersionRequest) throws MortgageBusinessException {
 		log.info("entering into getmaxVersionByMorgageIDSoapCall method ");
@@ -32,6 +45,14 @@ public class MortgageSoapServiceClient extends WebServiceGatewaySupport {
 		}
 	}
 
+	/**
+	 * This method in SOAP client is used to invoke getAllMortgage call on SOAP
+	 * Layer at at backend application.
+	 * 
+	 * @param getMortgagesRequest
+	 * @return
+	 * @throws MortgageBusinessException
+	 */
 	public GetMortgagesResponse getAllMortgagesSoapCall(final GetMortgagesRequest getMortgagesRequest)
 			throws MortgageBusinessException {
 		try {
@@ -46,7 +67,16 @@ public class MortgageSoapServiceClient extends WebServiceGatewaySupport {
 		}
 	}
 
-	public CreateMortgageResponse createMortgageSoapCall(final CreateMortgageRequest createMortgageRequest) throws MortgageBusinessException {
+	/**
+	 * This method in SOAP Service cleint is used to invoke createMortgage call on
+	 * SOAP Layer at backend   application.
+	 * 
+	 * @param createMortgageRequest
+	 * @return
+	 * @throws MortgageBusinessException
+	 */
+	public CreateMortgageResponse createMortgageSoapCall(final CreateMortgageRequest createMortgageRequest)
+			throws MortgageBusinessException {
 		try {
 			log.info("entering into createMortgageSoapCall method ");
 			CreateMortgageResponse response = (CreateMortgageResponse) getWebServiceTemplate()
