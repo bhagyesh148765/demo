@@ -55,6 +55,7 @@ public class MortgageServiceIMPL implements MortgageService {
 
 	/**
 	 * This method Invokes getAllMortgages method on either Rest or SOAP Gateway
+	 * based on configuration switch
 	 * 
 	 * @param sortOrder
 	 * @return GetAllMortgagesConsumerResponse
@@ -66,6 +67,7 @@ public class MortgageServiceIMPL implements MortgageService {
 
 	/**
 	 * This method Invokes getAllMortgages method on either Rest or SOAP Gateway
+	 * based on configuration switch
 	 * 
 	 * @param MortgageDto
 	 * @return CreateMortgageResponse
@@ -80,7 +82,8 @@ public class MortgageServiceIMPL implements MortgageService {
 	}
 
 	/**
-	 * This method Invokes getMaxVersion method on either Rest or SOAP Gateway
+	 * This method Invokes getMaxVersion method on either Rest or SOAP Gateway based
+	 * on configuration switch
 	 * 
 	 * @param MortgageDto
 	 * @return CreateMortgageResponse
@@ -116,7 +119,7 @@ public class MortgageServiceIMPL implements MortgageService {
 	/**
 	 * @param protocallDelegator the protocallDelegator to set
 	 */
-	public void setProtocallDelegator(ProtocallDelegator protocallDelegator) {
+	public void setProtocallDelegator(final ProtocallDelegator protocallDelegator) {
 		this.protocallDelegator = protocallDelegator;
 	}
 

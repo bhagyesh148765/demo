@@ -22,6 +22,12 @@ public class BackendRestServiceCallDelegator implements ProtocallDelegator {
 	@Autowired
 	private MortgageRestServiceClient restServiceClient;
 
+	/***
+	 * This method is used to get max version for given mortgageID by calling
+	 * backend Rest service
+	 * 
+	 * @throws MortgageBusinessException
+	 */
 	@TrackTime
 	public Integer getMaxVersionByMortgageID(final String mortgageID) throws MortgageBusinessException {
 		final GetMaxVersionByMortgageIDRequest maxVersionRequest = new GetMaxVersionByMortgageIDRequest();
@@ -29,6 +35,12 @@ public class BackendRestServiceCallDelegator implements ProtocallDelegator {
 		return restServiceClient.getmaxVersionByMorgageIDRestCall(mortgageID);
 	}
 
+	/***
+	 * This method is used to get all mortgages based on sorting parameter sortOrder
+	 * by calling backend Rest service
+	 * 
+	 * @throws MortgageBusinessException
+	 */
 	@TrackTime
 	public GetAllMortgagesConsumerResponse getAllMortgages(final String sortOrder) throws MortgageBusinessException {
 		final GetMortgagesRequest getMortgagesRequest = new GetMortgagesRequest();
@@ -37,6 +49,11 @@ public class BackendRestServiceCallDelegator implements ProtocallDelegator {
 		return new MortgageRestResponseMapper().mapRestResponse(response);
 	}
 
+	/***
+	 * This method is used to create mortgages by calling backend Rest service
+	 * 
+	 * @throws MortgageBusinessException
+	 */
 	@TrackTime
 	public String createMorgage(final MortgageDto reqEntity) throws MortgageBusinessException {
 		return restServiceClient.createMortgageRestCall(reqEntity);

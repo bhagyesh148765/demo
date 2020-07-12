@@ -8,12 +8,19 @@ import com.mortgage.datalayer.demo.dto.MortgageDto;
 import com.mortgage.datalayer.demo.dto.Mortgages;
 
 /**
+ * Class responsible for Rest reponse creation from database entities
  * 
  * @author bhagyesh
  *
  */
 public class MortgageRestResponseMapper {
 
+	/**
+	 * this method converts mortgage database enitites into rest response
+	 * 
+	 * @param mortgageList
+	 * @return
+	 */
 	public GetMortgagesRestResponse mapGetMortgagesResponse(final List<MortgageDto> mortgageList) {
 		final List<Mortgages> mortgageResponseDtoList = mortgageList.stream().map(dto -> {
 			Mortgages mortgagesResponseObj = new Mortgages();

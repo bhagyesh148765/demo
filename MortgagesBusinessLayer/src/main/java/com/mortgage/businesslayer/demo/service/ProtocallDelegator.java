@@ -5,7 +5,7 @@ import com.mortgage.businesslayer.demo.dto.MortgageDto;
 import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 
 /**
- * This interface is used by both SOAP and Rest service handler classess
+ * This interface is used by both SOAP and Rest service gateway classess
  * 
  * @author bhagyesh
  *

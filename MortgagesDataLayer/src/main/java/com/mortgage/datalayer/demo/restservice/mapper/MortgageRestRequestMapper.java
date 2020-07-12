@@ -3,10 +3,16 @@ package com.mortgage.datalayer.demo.restservice.mapper;
 import com.mortgage.datalayer.demo.dto.CreateMortgageRestRequest;
 import com.mortgage.datalayer.demo.dto.MortgageDto;
 
+/**
+ * Class responsible for creation of database entities from Rest request 
+ * 
+ * @author bhagyesh
+ *
+ */
 public class MortgageRestRequestMapper {
 
 	/***
-	 * Converts Incoming SOAP uest CreateMortgageuest to MortgageDTO
+	 * Converts Incoming Rest request CreateMortgageuest to database entity  MortgageDTO 
 	 * 
 	 * @param CreateMortgageuest createMortgageuest
 	 * @return MortgageDto

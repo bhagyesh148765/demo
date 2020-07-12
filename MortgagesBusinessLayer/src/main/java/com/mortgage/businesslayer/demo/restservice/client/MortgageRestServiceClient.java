@@ -25,6 +25,10 @@ import com.mortgage.businesslayer.demo.exception.MortgageBusinessException;
 @Component
 public class MortgageRestServiceClient {
 
+	private static final String ORDER_BY = "orderBy";
+
+	private static final String CREATED_DATE = "createdDate";
+
 	private static final Logger log = LoggerFactory.getLogger(MortgageRestServiceClient.class);
 
 	@Autowired
@@ -63,7 +67,7 @@ public class MortgageRestServiceClient {
 	}
 
 	/**
-	 * Rest cleint call to get all mortgsges details
+	 * Rest service client call to get all mortgsges details
 	 * 
 	 * @param sortOrder
 	 * @return
@@ -75,7 +79,7 @@ public class MortgageRestServiceClient {
 		try {
 			final String uri = restURLGetAllMorgages + sortOrder;
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("orderBy", "createdDate");
+			params.put(ORDER_BY, CREATED_DATE);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -92,7 +96,7 @@ public class MortgageRestServiceClient {
 	}
 
 	/**
-	 * Rest servicecall to create new mortgage in database
+	 * Rest service cleint call to create new mortgage in database
 	 * 
 	 * @param reqEntity
 	 * @return String status of operation

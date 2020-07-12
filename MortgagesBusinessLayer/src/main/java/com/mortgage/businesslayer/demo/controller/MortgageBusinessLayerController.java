@@ -32,6 +32,7 @@ import static com.mortgage.businesslayer.demo.constant.MortgageConstant.*;
  *
  */
 public class MortgageBusinessLayerController {
+	private static final String CREATE_MORTGAGE = "createMortgage";
 	@Autowired
 	MortgageService service;
 
@@ -48,7 +49,7 @@ public class MortgageBusinessLayerController {
 	@TrackTime
 	public ResponseEntity<GetAllMortgagesConsumerResponse> getAllMortgages(final @RequestParam(ORDER_BY) String orderBy)
 			throws MortgageBusinessException {
-		GetAllMortgagesConsumerResponse mortgageResponseDto = service.getAllMortgages(orderBy);
+		final GetAllMortgagesConsumerResponse mortgageResponseDto = service.getAllMortgages(orderBy);
 		return new ResponseEntity<GetAllMortgagesConsumerResponse>(mortgageResponseDto, new HttpHeaders(),
 				HttpStatus.OK);
 	}
@@ -61,7 +62,7 @@ public class MortgageBusinessLayerController {
 	 * @return
 	 * @throws MortgageBusinessException
 	 */
-	@PostMapping("createMortgage")
+	@PostMapping(CREATE_MORTGAGE)
 	@TrackTime
 	public ResponseEntity<CreateMortgageResponse> createMortgage(final @Valid @RequestBody MortgageDto mortgageDto)
 			throws MortgageBusinessException {

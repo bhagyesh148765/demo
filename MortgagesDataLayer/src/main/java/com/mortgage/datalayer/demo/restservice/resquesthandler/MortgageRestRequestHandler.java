@@ -12,11 +12,14 @@ import com.generated.GetMaxVersionByMortgageIDResponse;
 import com.mortgage.datalayer.demo.dto.CreateMortgageRestRequest;
 import com.mortgage.datalayer.demo.dto.GetMortgagesRestResponse;
 import com.mortgage.datalayer.demo.dto.MortgageDto;
-import com.mortgage.datalayer.demo.model.MortgageEntity;
 import com.mortgage.datalayer.demo.restservice.mapper.MortgageRestRequestMapper;
 import com.mortgage.datalayer.demo.restservice.mapper.MortgageRestResponseMapper;
 import com.mortgage.datalayer.demo.service.MortgageDataLayerService;
-
+/**
+ * This class is used to handle rest requests from rest controller 
+ * @author bhagyesh
+ *
+ */
 @Component
 public class MortgageRestRequestHandler {
 
